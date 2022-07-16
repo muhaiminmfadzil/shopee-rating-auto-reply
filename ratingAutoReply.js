@@ -134,7 +134,7 @@ async function postReplyEachRating(SPC_CDS, data) {
 async function run() {
   const SPC_CDS = getSPC_CDS();
   const data = await fetchAllRatings(SPC_CDS);
-  // await postReplyEachRating(SPC_CDS, data);
+  await postReplyEachRating(SPC_CDS, data);
   console.log("All jobs done!");
 }
 
