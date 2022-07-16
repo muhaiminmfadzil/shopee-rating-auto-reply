@@ -1,4 +1,12 @@
 /**
+ * Variables to change according to your needs
+ */
+// Rating reply message (string)
+const REPLY_MESSAGE = "Tqqq my dear customer..🥰🥳\nSaya jual ❤️\nPlease come again ye 💓🌈 "
+// Rating star to reply (number). Set null to reply to all regardless of rating star
+const RATING_STAR = null
+
+/**
  * Get cookie by name
  * @param {string} cname
  * @returns {string} value
@@ -33,11 +41,16 @@ function getSPC_CDS() {
  * Fetch rating
  * @param {string} SPC_CDS
  * @param {number} pageNumber
+ * @param {number} ratingStar
  * @param {boolean} replied
  * @returns {Promise}
  */
-async function fetchRating(SPC_CDS, pageNumber, replied = false) {
-  const url = `https://seller.shopee.com.my/api/v3/settings/search_shop_rating_comments/?SPC_CDS=${SPC_CDS}&SPC_CDS_VER=2&replied=${replied}&page_number=${pageNumber}&page_size=60&cursor=0&from_page_number=1`;
+async function fetchRating(SPC_CDS, pageNumber, ratingStar = RATING_STAR, replied = false) {
+  let url = `https://seller.shopee.com.my/api/v3/settings/search_shop_rating_comments/?SPC_CDS=${SPC_CDS}&SPC_CDS_VER=2&replied=${replied}&page_number=${pageNumber}&page_size=60&cursor=0&from_page_number=1`;
+  if (ratingStar) {
+    url += `&rating_star=${ratingStar}`
+  }
+  console.log({url});
   try {
     const response = await fetch(url);
     return await response.json();
@@ -82,7 +95,7 @@ async function fetchAllRatings(SPC_CDS) {
  * @param {string} reply
  * @returns {Array} data
  */
-function mapReplies(data, reply = "Tqqq my dear customer..🥰🥳\nSaya jual ❤️\nPlease come again ye 💓🌈 ") {
+function mapReplies(data, reply = REPLY_MESSAGE) {
   return data.map((item) => {
     return {
       comment_id: item.comment_id,
@@ -122,7 +135,7 @@ async function postReplyEachRating(SPC_CDS, data) {
 async function run() {
   const SPC_CDS = getSPC_CDS();
   const data = await fetchAllRatings(SPC_CDS);
-  await postReplyEachRating(SPC_CDS, data);
+  // await postReplyEachRating(SPC_CDS, data);
   console.log("All jobs done!");
 }
 
