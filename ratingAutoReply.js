@@ -50,7 +50,6 @@ async function fetchRating(SPC_CDS, pageNumber, ratingStar = RATING_STAR, replie
   if (ratingStar) {
     url += `&rating_star=${ratingStar}`
   }
-  console.log({url});
   try {
     const response = await fetch(url);
     return await response.json();
