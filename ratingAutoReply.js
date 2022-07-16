@@ -3,7 +3,7 @@
  */
 // Rating reply message (string)
 const REPLY_MESSAGE = "Tqqq my dear customer..🥰🥳\nSaya jual ❤️\nPlease come again ye 💓🌈 "
-// Rating star to reply (number). Set null to reply to all regardless of rating star
+// Rating star to reply (number : between 1 - 5). Set null to reply to all regardless of rating star
 const RATING_STAR = null
 
 /**
